@@ -1,0 +1,144 @@
+========= NodeJS, ExpressJS 설치 =========
+
+* nodeJS
+	- 노드를 통해 JS를 브라우저 뿐만 아니라, 서버사이드에서도 사용이 가능하다.
+	
+	
+* ExpressJS?
+	- 노드를 보다 편리하게 사용할 수 있게 해주는 프레임워크
+	
+	
+* 프로젝트 생성
+
+	1. 노드설치 [https://nodejs.org/ko/]
+		- 설치여부 확인
+			- >> node -v
+		
+	2. 프로젝트 구축
+		2-1. 프로젝트 폴더 생성
+		
+		2-2. npm 패키지 생성
+			- >> npm init
+			- author, package-name 등을 설정하면 'package.json' 생성됨.
+			
+		2-3. index.js 생성
+			- 백엔드 서버의 시작점
+			
+		2-4. ExpressJS 설치
+			- >> npm install express --save
+			- ~~save : 'package.json'에 express 생성정보 명시됨.
+			- dependencies의 라이브러리는 node-modules 폴더에 저장됨.
+			
+			
+* index.js를 통해 기본적인 expressJS 어플리케이션 만들어 실행
+	- hello-world 출력 [http://expressjs.com/en/starter/hello-world.html]
+	
+		1. 위의 내용 index.js에 붙이기
+		
+		2. package.json > scripts에 'start' 요소 추가
+			- "start" : "node index.js"
+			
+		3. 서버실행
+			>> npm run start
+			- start -> scripts에 추가한 'start' 구문이 실행된다.
+			
+		4. 브라우저를 통해 결과 확인
+		
+		
+
+========= DB 연결 =========
+
+* MongoDB 연결 [https://www.mongodb.com/]
+
+	1. 클러스터 생성
+		1-1. 'Build a New Cluster' 선택
+		1-2. 가장 가까운 나라 선택 & 클러스터 이름 기입 후 생성
+		
+	2. 유저 생성
+		2-1. 'connect' 클릭
+		2-2. 'Setup connection security' 등록
+		2-3. username/password 기입 후 'Create MongoDB User' 클릭
+		2-4. 'Choose a connection method > Connect your application' 선택
+		2-5. application code 복사하여 가지고 있기
+		
+	3. Mongoose 설치
+		- Mongoose??
+			- MongoDB를 편하게 쓸수 있는 모델링 툴
+			
+		- >> npm install mongoose --save
+		
+	4. Mongoose를 통해 App에 MongoDB 연동
+		4-1. index.js에서 Mongoose 모듈에 MongoDB application code 참조
+			- password 부분 mongoDB 생성 시 기입한 password로 변경
+		4-2. 연결문에 'use...' 옵션 설정 (안하면 에러발생)
+		4-3. 연결문에 접속성공/실패 시 후속처리 작업
+		4-4. App 실행하여 MongoDB 연결 확인
+		
+		
+* MongoDB Model & Schema 생성
+	
+	- Model?
+		- 스키마를 감싸는 역할
+		
+	- Schema?
+		- 각 필드와 필드에 대한 스펙으로 구성된 객체
+		
+	1. models 폴더생성
+	
+	2. models 폴더 내부에 스키마파일(.js) 생성 
+	
+	3. 모델&스키마 구현
+		3-1. DB모듈 가져오기
+		
+		3-2. DB에 스키마 생성
+			- .Schema({스키마정보...})
+				- token : 유효성 관리
+				- tokenExp : 토큰 유효기간
+			
+		3-3. 모델 생성하여 스키마와 맵핑
+			- model(스키마명, 해당 스키마)
+			
+		3-4. 모델 외부참조 설정
+
+
+========= Git 연결 =========
+
+* Git 연결 [https://www.git-scm.com]
+
+	1. Git 설치여부 확인
+		- >> git --version
+	
+	2. 프로젝트에 Git 저장소 생성 및 연결
+		- Git 연결 상태확인 [ >> git status ]
+			
+		- 저장소 생성(Working Dir) [ >> git init ]
+			
+		- 프로젝트 Git 대기열(Staging Area)에 추가 [ >> git add ] 
+		
+		-
+		
+	3. 프로젝트의 Git 상태확인
+		- >> git status
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
