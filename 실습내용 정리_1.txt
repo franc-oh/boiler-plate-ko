@@ -109,22 +109,102 @@
 		- >> git --version
 	
 	2. 프로젝트에 Git 저장소 생성 및 연결
-		- Git 연결 상태확인 [ >> git status ]
+		- Git 진행상태 확인
+			- >> git status
 			
-		- 저장소 생성(Working Dir) [ >> git init ]
+		2-1. 저장소 생성(Working Dir)
+			- >> git init
 			
-		- 프로젝트 Git 대기열(Staging Area)에 추가 [ >> git add ] 
+		2-2. 프로젝트 Git 대기열(Staging Area)에 추가
+			- >> git add .
+			
+			- '.'은 전체파일 추가
+			
+			!! add 전, node 파일과 라이브러리 파일 제외하기
+				
+				1. .gitignore 파일 생성
+				
+				2. .gitignore 파일에 연결 시 제외 할 파일 명시
+					(ex: node_modules)
+					
+				3. 이미 git add로 모두 올렸다면, git에 제외대상 삭제
+					- >> git rm --cached [node-modules] -r
 		
-		-
+		2-3. 프로젝트 저장소로 커밋
+			- >> git commit -m "커밋 메세지"
+			
+		2-4. 리모트 Git 저장소로 최종 동기화
+			- 아래 GitHub 연동 후 작업
 		
-	3. 프로젝트의 Git 상태확인
-		- >> git status
+
+* GitHub 연동 [https://www.github.com]
+	- GitHub??
+		- Git을 사용하는 클라우드 서비스.
+		
+	- GitHub 연결하기
+		1. 'new'를 통해 저장소 생성
+			- 저장소 이름, 설명만 기입 후 생성
+			
+		2. GitHub와의 안전한 통신을 위해 SSH 설정
+			(Window는 GitBash를 통해 작업)
+			
+			2-1. ssh key 생성확인
+				- >> ls -a ~/.ssh
+				- id_rsa, id_rsa.pub이 있다면 SSH가 설정된 것이다.
+				
+			2-2. ssh key 생성 및 Agent에 연결 작업
+				- 아래 페이지의 가이드대로 작업
+				[https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent]
+
+		3. GitHub과 프로젝트 동기화
+			- 프로젝트_Root에서 GitHub 저장소의 명령어 복붙하기.
+				(init ~ commit이 완료된 상태라면 '…or push an existing..' 작업)
 
 
+========= Body-parser와 Client~Server 통신 =========
+
+* Client~Server 통신을 어떻게 하는가??
+	- Client는 Body(JSON, String, URL...)데이터를 Server에 데이터 전달
+	- Server는 Body 데이터를 분석하여 RequestBody로 받을 수 있어야 함... 
+	- 'Body-parser'를 통해 Body 데이터 분석, 모델에 맵핑할 수 있다.
 
 
+* Body-parser를 통해 Client~Server요청을 해보자
 
+	1. body-parser 설치
+		- >> npm install body-parser --save
+		
 
+	2. PostMan 설치. [https://www.postman.com/]
+	
+	
+	3. Register Route 생성
+		- index.js >> 3번 참고
+		
+		- '/register' post 요청을 처리하는 부분 구현
+			1. Client의 요청을 body-parser를 통해 req.body로 받아, 모델로 객체화
+			2. 데이터를 DB에 저장하는 기능 구현
+				- 몽고DB는 '.save(에러, 메세지)' 메소드를 통해 처리부 구현이 가능하다.
+				
+	4. App 실행 후 PostMan을 통해 '/register' 통신테스트를 해보자.
+		- Url 기입
+		- 'Body > raw'로 이동하여 데이터 포맷선택 후 통신테스트 
+			
+			
+========= nodeMon 설치 =========
+
+* nodeMon
+	- 소스변경을 감지하여 WAS 재기동해주는 Tool
+	
+* nodeMon 설치
+	- >> npm install nodemon --save-dev
+	- '-dev'는 개발서버 옵션 (pack.json >> devDependencies에 따로 정의됨)
+	
+* nodeMon 연동
+	- 'pack.json >> script'에 스크립트 추가
+	- "backend(사용자 정의)": "nodemon index.js"
+	- 'npm run [backend]'로 서버 기동 시 nodemon 연동
+	  (소스변경 감지 후 자동 재기동)
 
 
 
