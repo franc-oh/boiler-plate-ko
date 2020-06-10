@@ -14,8 +14,11 @@ app.listen(port, () => console.log(`Example app listening at http://localhost:${
 // 2-1. DB모듈 가져오기
 const mongoose = require('mongoose');
 
+
+const config = require('./config/key');
+
 // 2-2. DB connection문 작성
-mongoose.connect('mongodb+srv://devSaintLaurent:dhrudgns123$@boilerplate-qjngi.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(config.mongoURI, {
     useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
 }).then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
