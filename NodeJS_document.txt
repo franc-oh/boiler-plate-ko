@@ -134,7 +134,9 @@
 			- >> git commit -m "커밋 메세지"
 			
 		2-4. 리모트 Git 저장소로 최종 동기화
-			- 아래 GitHub 연동 후 작업
+			- 최초일 경우 = 아래 GitHub 연동 후 작업
+			- 최초X
+				- >> git push {저장소명(origin)} {브런치명(master)}
 		
 
 * GitHub 연동 [https://www.github.com]
@@ -239,6 +241,8 @@
 		- heroku에서 운영이 관리될 경우 환경변수=production
 		
 	5. index.js에서 설정 js파일 가져와서 사용.
+
+
 
 
 
