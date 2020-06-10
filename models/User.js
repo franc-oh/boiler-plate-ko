@@ -1,7 +1,7 @@
-// 3-1. DB모듈 가져오기
+// 1. DB모듈 가져오기
 const mongoose = require('mongoose');
 
-// 3-2. 스키마 생성
+// 2. 스키마 생성
 const userSchema = mongoose.Schema({
 
     name: {
@@ -30,8 +30,8 @@ const userSchema = mongoose.Schema({
 
 });
 
-// 3-3. 모델에 스키마 맵핑
+// 3. 모델에 스키마 맵핑
 const User = mongoose.model('User', userSchema);
 
-// 3-4. 모델 외부참조 설정
+// 4. 모델 외부참조 설정
 module.exports = { User }

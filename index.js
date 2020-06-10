@@ -14,10 +14,12 @@ app.listen(port, () => console.log(`Example app listening at http://localhost:${
 // 2-1. DB모듈 가져오기
 const mongoose = require('mongoose');
 
-
+// 4. 비밀설정정보 관리
+// 4-1. 설정파일 가져오기 
 const config = require('./config/key');
 
 // 2-2. DB connection문 작성
+// 4-2. 직접 설정정보 명시 >> 설정파일에 지정한 정보를 참조하도록 대체 (은닉화) 
 mongoose.connect(config.mongoURI, {
     useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
 }).then(() => console.log('MongoDB Connected...'))
