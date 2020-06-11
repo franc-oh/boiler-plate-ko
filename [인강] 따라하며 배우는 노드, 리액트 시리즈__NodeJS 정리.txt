@@ -209,7 +209,7 @@
 	  (소스변경 감지 후 자동 재기동)
 	  
 	  
-========= 비밀설정 정보관리 =========
+========= 비밀설정정보 관리 =========
 
 * 보안과 관련된 설정정보 분기관리하는 방법
 	1. 설정정보를 별도 관리할 '.js'파일 생성
@@ -233,7 +233,7 @@
 		(예: prod.js)
 		
 	2. '.js' 파일에 비밀정보 분기관리
-		- module.exports = { 이름: process.env.사이트에서 지정한 설정명 }
+		- module.exports = { 이름: process.env.[사이트에서 지정한 설정명] }
 	  
 	3. 분기 처리 용도의 '.js'파일 생성
 		(예: key.js)
@@ -245,8 +245,58 @@
 
 
 
+========= Bcrypt를 통한 비밀번호 암호화 =========
+
+* Bcrypt 설치
+	- >> npm install bcrypt --save
 
 
+* Bcrypt를 통해 비밀번호 등을 암호화하여 DB에 저장할 수 있음.
+	- save가 되기 전에 처리해야 함 -> 모델.js에서 처리
+
+		
+	- 암호화 처리부 구현하기 [https://www.npmjs.com/package/bcrypt]
+		- Bcrypt는 salt를 통해 암호화를 하기 때문에 salt를 생성해야 함,
+		- salt 생성에는 'saltRounds'가 필요
+		!! 해당 처리부는 모델에 스키마를 맵핑하기 전에 구현해야 됨
+
+		2-1. saltRounds 선언
+			- >> const saltRounds = 10;
+			
+		2-2. salt를 통해 암호화하는 처리부 구현
+			- 스키마가 저장되기 전 암호화될 수 있도록 처리
+				- >> 스키마.pre('save')
+				
+			- 비밀번호가 변경되었을 경우에만 처리되도록 구현
+				- >> this(userSchema).isModified('비밀번호')
+			
+			- 각 펑션에는 에러처리 로직으로 분기
+			
+		2-3. PostMan을 통해 전송테스트
+			- 결과는 mongoDB > Collections에서 확인
+	
+
+
+========= 로그인기능 구현 =========
+
+* login Route 구현
+	- 요청 이메일을 DB에서 존재여부 확인
+	
+	- 요청 비밀번호 존재여부 및 맞는지 확인
+		- planePassword를 암호화하여 비교
+		
+	- 비번이 같다면 Token 생성 후 쿠키에 저장
+		1. JSONWEBTOKEN 설치
+			- >> npm install jsonwebtoken --save
+			
+		2. 토큰생성하는 로직 구현 [https://www.npmjs.com/package/jsonwebtoken]
+		
+		3. 생성된 토큰을 쿠키에 저장하는 로직 구현
+			- cookie-parser 설치
+				- >> npm install cookie-parser --save
+				
+	- PostMan을 통해 전송테스트
+	
 
 
 
