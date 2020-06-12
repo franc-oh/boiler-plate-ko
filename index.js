@@ -35,7 +35,7 @@ app.use(bodyparser.urlencoded({extended: true})); //application/x-www-form-urlen
 app.use(bodyparser.json()); //application/json 분석
 
 // 3-1. Register Route 구현
-app.post('/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
   
   // Client의 요청을 req.body(body-parser를 통해)에 담아 User 모델로 객체화. 
   const user = new User(req.body);
@@ -56,7 +56,7 @@ const cookieParser = require('cookie-parser');  // 생성된 토큰을 쿠키에
 app.use(cookieParser());
 
 // 4-1. login Route 구현
-app.post('/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
 
   // 요청 이메일을 DB에서 존재여부 확인
   User.findOne({ email: req.body.email }, (err, user) => {
@@ -86,6 +86,45 @@ app.post('/login', (req, res) => {
 
   })
 
+})
+
+
+// 5. Auth 기능 구현
+const { auth } = require('./middleware/auth');
+
+// 5-1. Auth Route 구현 __(auth = 인증처리기능을 구현한 미들웨어, 통과 시 콜백펑션 실행됨)
+app.get('/api/users/auth', auth, (req, res) => {
+
+  // 유저가 있을 시 실행되는 처리 부
+  res.status(200).json({
+
+    // 미들웨어에서 req에 대입을 시켰기 때문에 req.요소로 참조가능
+    _id: req.user._id,
+    isAdmin: req.user.role === 0 ? false : true,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    image: req.user.image
+
+  })
 
 })
 
+
+// 6. 로그아웃 기능 구현
+
+// 6-1. logout Route 구현
+app.get('/api/users/logout', auth, (req, res) => {
+
+  // 유저를 찾아서 업데이트
+  User.findOneAndUpdate({ _id: req.user._id },
+    {token: ""}
+    ,(err, user) => {
+        if(err) return res.json({ success: false, err });
+        return res.status(200).send({
+          success: true
+        })
+    })
+})

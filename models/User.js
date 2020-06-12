@@ -94,6 +94,25 @@ const userSchema = mongoose.Schema({
         })
     }
 
+
+    // === [4] Auth 기능 구현
+    userSchema.statics.findByToken = function ( token, cb ) {
+        var user = this;
+
+        // 토큰을 decode 한다.
+        jwt.verify(token, 'secretToken', function(err, decoded) {
+            // 유저 아이디를 이용하여 유저를 DB에서 찾는다.
+            user.findOne({ "_id": decoded, "token": token }, function(err, user) {
+
+                if(err) return cb(err);
+                cb(null, user);
+                
+            })
+
+            // 결과에 따라 인증처리
+        }) 
+    }
+
 // 3. 모델에 스키마 맵핑
 const User = mongoose.model('User', userSchema);
 
